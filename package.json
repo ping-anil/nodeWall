@@ -1,0 +1,21 @@
+{
+  "name": "nodeapi",
+  "version": "1.0.0",
+  "description": "wallet_solana",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "solana"
+  ],
+  "author": "anil",
+  "license": "ISC",
+  "dependencies": {
+    "@solana/web3.js": "^1.36.0",
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.15"
+  }
+}
