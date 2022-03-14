@@ -5,6 +5,8 @@ const userSchema = new mongoose.Schema({
     phone: String,
     password: String,
     privateKey:Buffer,
+    publicKey:Buffer,
+    balance: String
 })
 
 

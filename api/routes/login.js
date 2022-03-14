@@ -11,14 +11,14 @@ const router = express.Router();
 
 
 
-router.post('/',(req,res,next)=>{
+router.post('/', async (req,res,next)=>{
 
     var number = req.body.phone;
     var password = req.body.password;
     
     User.find({phone:req.body.phone})
     .exec()
-    .then(user=>{
+    .then(async user=>{
         if(user.length<1){
             return res.status(401).json({
                 message: "user not found"
@@ -31,20 +31,21 @@ router.post('/',(req,res,next)=>{
                 'confirmed',
             );
 
-            // var _privateKey = user[0].privateKey;
-           
-            // var wallet = web3.Keypair.fromSecretKey(_privateKey);
-            // var publicKey = wallet.publicKey.toString();
-            var publicKey = "pending implementation";
-            var balance = "0";
-            console.log( "here");
+            var _privateKey = user[0].privateKey;
+            var s = new Uint8Array(_privateKey.buffer);
+            console.log(s);            
+            var wallet = web3.Keypair.fromSecretKey(s);
+            var publicKey = wallet.publicKey.toString();
+            var balance = await connection.getBalance(wallet.publicKey)
+
+            console.log(user[0].privateKey);
+            
             const token = jwt.sign(
                 {phone : user[0].phone},
                 'some key text', 
                 { expiresIn:"100h" }
              );
 
-             console.log( token);
             res.status(200).json(
                 {
                     message: 'success',
@@ -59,7 +60,7 @@ router.post('/',(req,res,next)=>{
         .catch(err=>{
             res.status(500).json({
                 message: 'failed',
-                error: err
+                error: err.body
             })
     })
 })

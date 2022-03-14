@@ -17,39 +17,36 @@ var connection = new web3.Connection(
     web3.clusterApiUrl('devnet'),
     'confirmed',
   );
-
   // Generate a new wallet keypair 
-  var wallet = web3.Keypair.generate();
-//   let account = await connection.getAccountInfo(wallet.publicKey);
-  var balance = await connection.getBalance(wallet.publicKey);
-console.log(wallet.secretKey.toString());
+    var wallet = web3.Keypair.generate();
+    var airdropSignature = await connection.requestAirdrop(wallet.publicKey, web3.LAMPORTS_PER_SOL *2, );
+             
+    var accountBalance = await connection.getBalance(wallet.publicKey);
 
     // saving user
-    const a = new User({
-    userId: new mongoose.Types.ObjectId,
-    phone: req.body.phone,
-    password: req.body.password,
-    privateKey:wallet.secretKey.toString(),
+    const userData = new User({
+        userId: new mongoose.Types.ObjectId,
+        phone: req.body.phone,
+        password: req.body.password,
+        privateKey:wallet.secretKey.toString(),
+        publicKey:wallet.publicKey.toString(),
+        balance: accountBalance.toString()
     });
 
-    a.save()
+    userData.save()
     .then(result=>{
-        console.log(result);
         res.status(200).json({
             message: "success",
             user: result,
-            balance: balance,
-            balance: balance,
             publicKey: wallet.publicKey.toString()
         })
+        console.log("success");
     })
-
     .catch(err=>{
-        console.log()
+        console.log(err.message);
         res.status(500).json({
-            message: "failue",
-            errro:err,
-            user: result
+            message: "failure",
+            errro:err
         })
     })
    

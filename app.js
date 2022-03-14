@@ -2,9 +2,11 @@ const { response } = require("express");
 const express = require("express");
 const web3 = require('@solana/web3.js');
 const mongoose = require('mongoose');
+const cors = require('cors')
 const bodyParser = require('body-parser');
 
 const app = express();
+app.use(cors());
 
 mongoose.connect('mongodb+srv://unite_anil:Qwerty123@cluster0.igrwc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
 
@@ -28,6 +30,9 @@ app.use('/login',loginRoute)
 
 const signupRoute = require('./api/routes/signup');
 app.use('/signup',signupRoute)
+
+const airDropSol = require('./api/routes/airdrop');
+app.use('/airDropSol',airDropSol)
 
 
 app.use((req,res,next) => {
