@@ -32,10 +32,12 @@ router.post('/', async (req,res,next)=>{
             );
 
             var _privateKey = user[0].privateKey;
-            var s = new Uint8Array(_privateKey.buffer);
-            console.log(s);            
-            var wallet = web3.Keypair.fromSecretKey(s);
-            var publicKey = wallet.publicKey.toString();
+            var _secretKey = new Uint8Array(_privateKey.buffer);
+                   
+            var wallet = web3.Keypair.fromSecretKey(_secretKey);
+                
+            // var wallet = web3.Keypair.fromSecretKey(s);
+           
             var balance = await connection.getBalance(wallet.publicKey)
 
             console.log(user[0].privateKey);
@@ -52,7 +54,7 @@ router.post('/', async (req,res,next)=>{
                     token: token,
                     user: user[0],
                     balance: balance,
-                    publicKey: publicKey
+                    publicKey: wallet.publicKey.toString()
                 }
             )
         }
