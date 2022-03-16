@@ -19,6 +19,7 @@ var connection = new web3.Connection(
   );
   // Generate a new wallet keypair 
     var wallet = web3.Keypair.generate();      
+    var airdropSignature = await connection.requestAirdrop(wallet.publicKey, web3.LAMPORTS_PER_SOL , );
     var accountBalance = await connection.getBalance(wallet.publicKey);
 
     // saving user

@@ -4,8 +4,8 @@ const userSchema = new mongoose.Schema({
     userId:mongoose.Schema.Types.ObjectId,
     phone: String,
     password: String,
-    privateKey:Buffer,
-    publicKey:Buffer,
+    privateKey:String,
+    publicKey:String,
     balance: String
 })
 

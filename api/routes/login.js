@@ -32,13 +32,23 @@ router.post('/', async (req,res,next)=>{
             );
 
             var _privateKey = user[0].privateKey;
-            var _secretKey = new Uint8Array(_privateKey.buffer);
-                   
-            var wallet = web3.Keypair.fromSecretKey(_secretKey);
-                
-            // var wallet = web3.Keypair.fromSecretKey(s);
+            // console.log(_privateKey);
+            // let _secretKey = new Uint8Array("[1,2,3]");
+            // console.log(_secretKey);
+
+            // let _secretKey2 =  Uint8Array.from([175,216,228,31,184,239,162,237,116,25,123,148,45,65,72,235,238,157,80,195,128,160,1,69,39,213,165,152,44,59,158,31,245,74,231,2,112,117,176,47,233,15,176,140,86,53,217,141,43,177,181,206,129,152,50,12,32,94,194,203,87,138,48,114]);
+            // console.log(_secretKey2);
+
+            var array = JSON.parse("[" + _privateKey + "]");
+            let _secretKey3 =  Uint8Array.from(array);       
+            var wallet = web3.Keypair.fromSecretKey(_secretKey3);
            
+            var airdropSignature = await connection.requestAirdrop(wallet.publicKey, web3.LAMPORTS_PER_SOL , );
+
             var balance = await connection.getBalance(wallet.publicKey)
+            console.log("private key : "+wallet.publicKey.toString());
+            console.log("public key : "+wallet.secretKey.toString());
+            console.log(" : "+balance);
 
             console.log(user[0].privateKey);
             

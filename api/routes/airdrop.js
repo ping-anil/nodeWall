@@ -29,10 +29,10 @@ router.post('/',async function (req,res,next){
                     'confirmed',
                 );
     
-    
-                var privateKey = user[0].privateKey;
-                var wallet = web3.Keypair.fromSecretKey(privateKey);
-                var airdropSignature = await connection.requestAirdrop(wallet.publicKey, web3.LAMPORTS_PER_SOL *2, );
+                var _privateKey = user[0].privateKey;
+                var array = JSON.parse("[" + _privateKey + "]");
+                var wallet = web3.Keypair.fromSecretKey(array);
+                var airdropSignature = await connection.requestAirdrop(wallet.publicKey, web3.LAMPORTS_PER_SOL, );
                 var publicKey = wallet.publicKey.toString();
                 var balance = "0";
                 
